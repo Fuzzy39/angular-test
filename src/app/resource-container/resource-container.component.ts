@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { ResourceComponent } from '../resource/resource.component';
 
 @Component({
@@ -7,6 +7,19 @@ import { ResourceComponent } from '../resource/resource.component';
   templateUrl: './resource-container.component.html',
   styleUrl: './resource-container.component.css'
 })
-export class ResourceContainerComponent {
+export class ResourceContainerComponent 
+{
+  
 
+  constructor(private viewContainer: ViewContainerRef) 
+  {
+
+  } 
+
+
+  loadContent() 
+  {  
+
+    this.viewContainer.createComponent(); 
+  } 
 }
