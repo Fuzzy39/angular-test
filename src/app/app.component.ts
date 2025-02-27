@@ -12,3 +12,4 @@ import { ResourceContainerComponent } from './resource-container/resource-contai
 export class AppComponent {
   title = 'angular-test';
 }
+    

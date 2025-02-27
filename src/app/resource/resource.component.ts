@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Pipe, PipeTransform } from '@angular/core';
+import { resource } from '../resource-container/resource-container.component';
 
 @Component({
   selector: 'app-resource',
@@ -6,11 +7,28 @@ import { Component } from '@angular/core';
   templateUrl: './resource.component.html',
   styleUrl: './resource.component.css'
 })
-export class ResourceComponent {
-  private _name: string = "default";
+export class ResourceComponent 
+{
   public amount: number = 0;
+  
+  public _resource:resource = resource.Invalid;
 
-  get name(): string {
-    return this._name;
-  }
+  constructor(){console.log("HELLO?????");}
+
+  /*get resourceType(): string 
+  {
+    return this._resource;
+  }*/
+  
+ 
+  /*
+  set resourceType(value: resource)
+  {
+    if(this._resource === resource.Invalid)
+    {
+      throw Error("Resource already set");
+    }
+
+    this._resource = value;
+  }*/
 }
