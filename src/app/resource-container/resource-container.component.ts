@@ -3,8 +3,8 @@ import { ResourceComponent, ResourceData, resource } from '../resource/resource.
 
 
 let resourceDataArray:ResourceData[] = [
-  {res:resource.Seetbucks, description:"Hard-earned cash for appeasing the unknowable."},
-  {res:resource.Milk, description:"Required, avaliable. Seet favors this."}
+  {res:resource.Seetbucks, name:"Seetbucks", description:"Hard-earned cash for appeasing the unknowable."},
+  {res:resource.Milk, name:"Milk", description:"Required, avaliable. Seet favors this."}
 ]
 
 
@@ -35,11 +35,11 @@ export class ResourceContainerComponent
     viewContainer.clear();
 
   
-    for(let i = 1; i<Object.values(resource).length; i++)
+    for(let i = 0; i<resourceDataArray.length; i++)
     {
       // create and initialize resource
       let res = viewContainer.createComponent(ResourceComponent).instance;
-      res.resourceType = Object.values(resource)[i];
+      res.initialize(resourceDataArray[i]);
     }
   }
 

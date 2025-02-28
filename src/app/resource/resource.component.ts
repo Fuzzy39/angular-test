@@ -3,16 +3,19 @@ import { Component, Pipe, PipeTransform } from '@angular/core';
 
 export enum resource
 {
-  Invalid = "INVALID",
-  Seetbucks = "Seetbucks",
-  Milk = "Milk",
+  Invalid,
+  Seetbucks,
+  Milk,
 }
 
 export interface ResourceData
 {
   res:resource;
+  name:string;
   description:string;
 }
+
+
 
 
 @Component({
@@ -23,28 +26,18 @@ export interface ResourceData
 })
 export class ResourceComponent 
 {
-  public _amount: number = 0;
+  private _amount: number = 0;
   
-  public _resource:resource = resource.Invalid;
-  public description:string ="";
+  private _resource:resource = resource.Invalid;
+  private _name : string = "Invalid";
+  private _description:string ="";
 
-
-  get resourceType(): string 
+  public initialize(data:ResourceData)
   {
-    return this._resource;
-  }
-  
- 
-  
-  set resourceType(value: resource)
-  {
-    if(this._resource !== resource.Invalid)
-    {
-      throw Error("Resource already set");
-    }
-    console.log(value);
-
-    this._resource = value;
+    this._resource = data.res;
+    this._amount = 0;
+    this._name = data.name;
+    this._description = data.description;
   }
 
 
@@ -58,5 +51,25 @@ export class ResourceComponent
     this._amount+=toAdd;
     return this.amount;
   }
+  
+
+  get resourceType(): resource 
+  {
+    return this._resource;
+  } 
+
+  get name():string
+  {
+    return this._name;
+  }
+
+  get description():string
+  {
+    return this._description;
+  }
+
+
+
+
   
 }
