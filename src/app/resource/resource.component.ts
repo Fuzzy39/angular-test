@@ -1,4 +1,6 @@
-import { Component, Pipe, PipeTransform } from '@angular/core';
+import { Component, Pipe, PipeTransform, Signal, viewChild, ViewContainerRef } from '@angular/core';
+import { PurchasableComponent, PurchasableData } from '../purchasable/purchasable.component';
+import { ResourceContainerComponent } from '../resource-container/resource-container.component';
 
 
 export enum resource
@@ -13,6 +15,7 @@ export interface ResourceData
   res:resource;
   name:string;
   description:string;
+  purchasables:PurchasableData[];
 }
 
 
@@ -20,24 +23,52 @@ export interface ResourceData
 
 @Component({
   selector: 'app-resource',
-  imports: [],
+  imports: [PurchasableComponent],
   templateUrl: './resource.component.html',
   styleUrl: './resource.component.css'
 })
 export class ResourceComponent 
 {
+
+  private ViewContainer: Signal<ViewContainerRef | undefined> = viewChild('content', {read: ViewContainerRef});
+
+  private resources:ResourceContainerComponent|null = null;
   private _amount: number = 0;
   
   private _resource:resource = resource.Invalid;
   private _name : string = "Invalid";
   private _description:string ="";
 
-  public initialize(data:ResourceData)
+ 
+
+
+
+  public initialize(resources: ResourceContainerComponent, data:ResourceData)
   {
+    this.resources = resources;
+
     this._resource = data.res;
     this._amount = 0;
     this._name = data.name;
     this._description = data.description;
+
+
+    // create purchasables
+    let viewContainer = this.ViewContainer();
+    if(viewContainer === undefined)
+    {
+      throw Error("Couldn't create resources!");
+    }
+  
+
+  
+    for(let i = 0; i<data.purchasables.length; i++)
+    {
+      // create and initialize resource
+      let item = viewContainer.createComponent(PurchasableComponent).instance;
+      item.initialize(resources, data.purchasables[i]);
+    }
+
   }
 
 
@@ -46,10 +77,9 @@ export class ResourceComponent
     return this._amount;
   }
 
-  addAmount(toAdd:number):number
+  set amount(value:number)
   {
-    this._amount+=toAdd;
-    return this.amount;
+    this._amount = value;
   }
   
 

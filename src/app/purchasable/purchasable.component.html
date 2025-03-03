@@ -1,0 +1,12 @@
+<h3>{{name}}</h3>
+
+@if(displayPurchased)
+{
+<p>Owned: {{amountPurchased}}</p>
+}
+
+@if (costString.length > 0){
+    <p>Cost: {{costString}}</p>
+}
+<p>{{effectDesc}}</p>
+<button (click)="onClick()">buy</button>
